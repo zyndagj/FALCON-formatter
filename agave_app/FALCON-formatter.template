@@ -1,0 +1,3 @@
+python FALCON-formatter.py ${INPUT}
+
+rm -rf ${INPUT}

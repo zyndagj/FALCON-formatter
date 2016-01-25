@@ -1,0 +1,49 @@
+{
+	"available":true,
+	"defaultMaxRunTime":"02:00:00",
+	"defaultNodeCount":1,
+	"defaultQueue":"serial",
+	"deploymentPath":"gzynda/applications/FALCON-formatter/stampede",
+	"deploymentSystem":"data.iplantcollaborative.org",
+	"executionSystem":"stampede-01262015-1002-gzynda",
+	"executionType":"HPC",
+	"helpURI":"https://github.com/zyndagj/FALCON-formatter",
+	"label": "FALCON-formatter",
+	"modules":["python"],
+	"name":"gzynda-FALCON-formatter",
+	"ontology":["http://sswapmeet.sswap.info/agave/apps/Application"],
+	"parallelism":"SERIAL",
+	"shortDescription":"Format input for use with FALCON",
+	"tags":["FALCON","FASTQ","FASTA"],
+	"templatePath":"FALCON-formatter.template",
+	"testPath":"FALCON-formatter.test",
+	"version":"0.1",
+	"inputs":[
+		{
+			"id":"input",
+			"details": {
+				"label": "Select a fastq/a file or folder to format for use with FALCON"
+			}, 
+			"semantics": {
+				"fileTypes": [
+					"text-0"
+				], 
+				"maxCardinality": 1, 
+				"minCardinality": 1, 
+				"ontology": [
+					"http://sswapmeet.sswap.info/mime/text/X-multiFasta",
+					"http://sswapmeet.sswap.info/mime/text/X-multiFastq"
+				]
+			}, 
+			"value": {
+				"default": "",
+				"enquote": false,
+				"order": 0,
+				"required": true,
+				"validator": null,
+				"visible": true
+			}
+		}
+	]
+}
+
