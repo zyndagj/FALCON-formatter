@@ -1,5 +1,9 @@
 # FALCON-formatter
+The program FALCON-formatter takes fastq and fasta files from a Pacific Biosciences sequencer and formats them for *de novo* assembly with [FALCON](https://github.com/PacificBiosciences/FALCON).
+
+## Description
 Even though it is more convenient to store all reads in a single FASTA or FASTQ file on your system, [Dazzler](https://github.com/thegenemyers/DAZZ_DB) (and therefore FALCON) does not accept this kind of input. All inputs **MUST** be in FASTA format with files split by barcode, set, and part number. This means that fields 1-6 in the example below must be unique to each input file.
+
 ```none
 m140415_143853_42175_c100635972550000001823121909121417_s1_p0/553/3100_11230
 1yymmdd_hhmmss 33333 4444444444444444444444444444444444 55 66 777 8888888888
@@ -14,7 +18,7 @@ m140415_143853_42175_c100635972550000001823121909121417_s1_p0/553/3100_11230
 8. Subread Region (start_stop using polymerase read coordinates)*
 * These fields are only used in fasta/q headers
 
-More information can be found at the [SMRT-Analysis wiki](https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider).
+> More information about file formats can be found at the [SMRT-Analysis wiki](https://github.com/PacificBiosciences/SMRT-Analysis/wiki/Data-files-you-received-from-your-service-provider).
 
 Below is an example that demonstrates this requirement and process by correctly splitting the file Example.fasta.
 
@@ -43,6 +47,8 @@ All subreads corresponding to these headers need to be in their own files, so Ex
 >m140415_143853_42175_c324508543089230982134098587348034_s1_p0/553/103_725
 >m140415_143853_42175_c324508543089230982134098587348034_s1_p0/553/973_13390
 ```
+FALCON-formatter takes FASTA/Q files or folders of files as input, converts the FASTQ to FASTA and writes each read to a file corresponding to fields 1 through 6.
+
 ## Installation
 Using setuptools
 ```
