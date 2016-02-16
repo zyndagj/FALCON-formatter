@@ -81,7 +81,7 @@ FALCON-formatter [-h] [-w INT] [-o STR] F [F ...]
 
 ### Example
 ```
-FALCON-formatter ecoli.fasta
+$ FALCON-formatter ecoli.fasta
 Processing: ecoli.fasta
 ```
 
