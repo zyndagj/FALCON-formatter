@@ -81,3 +81,17 @@ Processing: ecoli.fasta
 
 ## CyVerse Usage
 If you’re coming from Cyverse, you first need to find the FALCON-formatter app in the HPC app catalog and launch it. Then, click on the “Inputs” drop down arrow to designate your inputs.
+
+![iplant_formatter_01](https://cloud.githubusercontent.com/assets/6790115/13088375/9e1a3c20-d4b1-11e5-8a43-a85ea903ddff.png)
+
+Then, click the browse button to open up a file explorer to choose your input.
+
+![iplant_formatter_02](https://cloud.githubusercontent.com/assets/6790115/13088373/9e18f126-d4b1-11e5-9118-33d83b679501.png)
+
+Select either a single fastq/fastq file or a whole folder to process.
+
+![iplant_formatter_03](https://cloud.githubusercontent.com/assets/6790115/13088374/9e1a41b6-d4b1-11e5-80db-2e4e2b025cd2.png)
+
+Click “Launch Analysis” to start your job. You’ll get notifications when the program starts and when it finishes.
+
+![iplant_formatter_04](https://cloud.githubusercontent.com/assets/6790115/13088376/9e1a9ac6-d4b1-11e5-936d-8486f4ba4174.png)
