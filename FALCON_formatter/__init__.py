@@ -25,7 +25,7 @@ def main():
 		inext = os.path.splitext(infile)[1][1:]
 		if inext in ('fasta','fa'):
 			parseFasta(infile, OF, args.w, args.o)
-		if inext in ('fastq','fq'):
+		elif inext in ('fastq','fq'):
 			parseFastq(infile, OF, args.w, args.o)
 		else:
 			sys.exit("Bad file format: %s"%(infile))
