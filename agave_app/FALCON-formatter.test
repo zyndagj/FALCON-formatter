@@ -1,3 +1,1 @@
-python FALCON-formatter.py in.fasta
-
-rm -rf in.fasta
+FALCON-formatter.template

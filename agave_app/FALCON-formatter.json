@@ -9,7 +9,7 @@
 	"executionType":"HPC",
 	"helpURI":"https://github.com/zyndagj/FALCON-formatter",
 	"label": "FALCON-formatter",
-	"modules":["python"],
+	"modules":["intel","python/2.7.9"],
 	"name":"gzynda-FALCON-formatter",
 	"ontology":["http://sswapmeet.sswap.info/agave/apps/Application"],
 	"parallelism":"SERIAL",
