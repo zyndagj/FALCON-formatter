@@ -1,1 +1,134 @@
-FALCON-formatter.template
+#!/bin/bash
+
+TEST=$PWD/../test_data
+FASTA=test.fasta
+FASTQ=test.fastq
+
+F0=">m141112_000000_42132_c100695752550000001823149803241513_s1_p0/161913/0_1824 RQ=0.795\nTGTCGGGTGTTTGTGGGGGGTGCTTAAATTCATTACTTATAATAAAAGGTACTAGCAATAAAAACTGTAAGTGAAAGATA\nTTACATTTCTTGTTAATTTC\n>m141112_000000_42132_c100695752550000001823149803241513_s1_p0/161921/0_1958 RQ=0.845\nGGGTTCAGAAAATCTTTGGGCAAAGTGGGTAGTGCGTGGAAAATATATAGCTTGAAGTTAAAAATCGTTGTCATGCAGTT\nTTGTTTCTATAAAATTGGTC"
+F1=">m141112_000001_42132_c100695752550000001823149803241513_s1_p0/161914/5718_13565 RQ=0.816\nCATAACGTTAATGTGCTATACACTGAAAAAAGTTTACTTGTAAAAATTGCTACGTGATTGTAGTGCACAGCTTTGGTTAC\nTCATTACTAATATTGTAGGA\n>m141112_000001_42132_c100695752550000001823149803241513_s1_p0/161930/0_8103 RQ=0.767\nAACAGAGCGATACTCGACCCTTATATTTAAGCTTAGGCGTTGGCGTGCCATTACGCTCGGACCCTTGCTTATAAGACACG\nCAAATATACGGGCGAGCATT"
+
+function checkDiff() {
+	if [[ -e $1 ]]
+	then
+		D="$( diff <(zcat $1) <(echo -e $2) | sed -e 's/\n/\\n/')"
+		if [[ -n $D ]]
+		then
+			echo "Output wrong: $1"
+			echo "$D"
+		fi
+	else
+		echo "File not created: $1"
+	fi
+}
+
+function runTests() {
+	OF0=m141112_000000_42132_c100695752550000001823149803241513_s1_p0.fasta.gz
+	OF1=m141112_000001_42132_c100695752550000001823149803241513_s1_p0.fasta.gz
+	[ -e $INPUT ] && echo "Input wasn't deleted"
+	checkDiff $OF0 "$1"
+	checkDiff $OF1 "$2"
+}
+
+function clean() {
+	for ext in fasta gz fastq
+	do
+		[ -n "$(ls *.${ext} 2> /dev/null)" ] && rm *.${ext}
+	done
+}
+
+#########################
+# Single Fasta
+#########################
+echo "== Testing single Fasta =="
+# Clean up environment
+clean
+# Make input
+cp $TEST/$FASTA .
+export INPUT=$FASTA
+# Run template
+bash $PWD/FALCON-formatter.template
+# Run tests
+OUT=$(runTests "$F0" "$F1" | sed -e 's/\n/\\n/')
+[ -n "$OUT" ] && echo -e "$OUT\nFAIL" || echo "OK."
+
+#########################
+# Single Fastq
+#########################
+echo "== Testing single Fastq =="
+# Clean up environment
+clean
+# Make input
+cp $TEST/$FASTQ .
+export INPUT=$FASTQ
+# Run template
+bash $PWD/FALCON-formatter.template
+# Run tests
+OUT=$(runTests "$F0" "$F1" | sed -e 's/\n/\\n/')
+[ -n "$OUT" ] && echo -e "$OUT\nFAIL" || echo "OK."
+
+#########################
+# Single Fasta.gz
+#########################
+echo "== Testing single Fasta.gz =="
+# Clean up environment
+clean
+# Make input
+cp $TEST/$FASTA . && gzip $FASTA
+export INPUT=${FASTA}.gz
+# Run template
+bash $PWD/FALCON-formatter.template
+# Run tests
+OUT=$(runTests "$F0" "$F1" | sed -e 's/\n/\\n/')
+[ -n "$OUT" ] && echo -e "$OUT\nFAIL" || echo "OK."
+
+#########################
+# Single Fastq.gz
+#########################
+echo "== Testing single Fastq.gz =="
+# Clean up environment
+clean
+# Make input
+cp $TEST/$FASTQ . && gzip $FASTQ
+export INPUT=${FASTQ}.gz
+# Run template
+bash $PWD/FALCON-formatter.template
+# Run tests
+OUT=$(runTests "$F0" "$F1" | sed -e 's/\n/\\n/')
+[ -n "$OUT" ] && echo -e "$OUT\nFAIL" || echo "OK."
+
+#########################
+# Folder with fastq and fasta
+#########################
+echo "== Testing folder =="
+# Clean up environment
+clean
+# Make input
+mkdir files
+cp $TEST/$FASTQ $TEST/$FASTA files
+export INPUT=files
+# Run template
+bash $PWD/FALCON-formatter.template
+# Run tests
+OUT=$(runTests "${F0}\n${F0}" "$F1\n$F1" | sed -e 's/\n/\\n/')
+[ -n "$OUT" ] && echo -e "${OUT}\nFAIL" || echo "OK."
+rm -rf files
+
+#########################
+# Folder with fastq.gz and fasta.gz
+#########################
+echo "== Testing folder with zipped =="
+# Clean up environment
+clean
+# Make input
+mkdir files
+cp $TEST/$FASTQ $TEST/$FASTA files
+gzip files/*
+export INPUT=files
+# Run template
+bash $PWD/FALCON-formatter.template
+# Run tests
+OUT=$(runTests "${F0}\n${F0}" "$F1\n$F1" | sed -e 's/\n/\\n/')
+[ -n "$OUT" ] && echo -e "${OUT}\nFAIL" || echo "OK."
+rm -rf files
+
+clean

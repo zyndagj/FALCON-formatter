@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ `ls ${INPUT}/*.gz` 2> /dev/null` ]]
+if [[ $(ls -A ${INPUT}/*.gz 2> /dev/null) ]]
 then
 	find ${INPUT} -name \*.gz | xargs -n 1 -P 16 gzip -d
 fi
