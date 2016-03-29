@@ -2,7 +2,7 @@
 
 if [[ $(ls -A ${INPUT}/*.gz 2> /dev/null) ]]
 then
-	find ${INPUT} -name \*.gz | xargs -n 1 -P 16 gzip -d
+	find ${INPUT} -name \*.gz | xargs -n 1 gzip -d
 fi
 
 if [[ ${INPUT} =~ \.gz$ ]]
@@ -10,9 +10,9 @@ then
 	gzip -d $INPUT
 	python FALCON-formatter.py ${INPUT%%.gz}
 	rm ${INPUT%%.gz}
-	find . -name \*.fasta | xargs -n 1 -P 16 gzip -4
+	find . -name \*.fasta | xargs -n 1 gzip -4
 else
 	python FALCON-formatter.py ${INPUT}
 	rm -rf ${INPUT}
-	find . -name \*.fasta | xargs -n 1 -P 16 gzip -4
+	find . -name \*.fasta | xargs -n 1 gzip -4
 fi

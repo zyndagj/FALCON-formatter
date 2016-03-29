@@ -1,6 +1,6 @@
 {
 	"available":true,
-	"defaultMaxRunTime":"02:00:00",
+	"defaultMaxRunTime":"03:00:00",
 	"defaultNodeCount":1,
 	"defaultQueue":"serial",
 	"deploymentPath":"gzynda/applications/FALCON-formatter/stampede",
